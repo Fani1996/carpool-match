@@ -1,0 +1,216 @@
+{% extends 'basic.html' %}
+{% block title %}Carpool Share{% endblock %}
+
+
+{% block content %}
+
+<div class="bg-light mt-5 text-white">
+    <div class="my-3 pt-5" style="background-image: url('http://papers.co/wallpaper/papers.co-vs30-abstract-background-line-shape-gray-minimal3d-pattern-bw-dark-26-wallpaper.jpg');">
+        <div sytle="height:120px;"></div>
+        <div class="row mx-5 pt-5">
+            <h1 class="display-4">Carpool Driver</h1>
+        </div>
+        <div class="row mx-5 mt-2 pt-5">
+            <h5 class="lead">Hi {{ user.username }}!<br/>Review, Search and Claim Your Order Here.</h5>
+        </div>
+        <div style="height:120px;"></div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row my-5">
+        <div class="col-8">
+            <div class="container">
+                <!--================================= Available rides ======================================-->
+                <div class="row ml-5">
+                    <p class="display-4 ml-3">Claim Available Rides</p>
+                </div>
+                <div class="row ml-5">
+                    <div class="col">
+                        <div class="card">
+                            {% if avail_rides %}
+                            <div class="accordion" id="accordionExample">
+                                {% for ride in avail_rides %}
+                                <div class="card">
+                                    <div class="card-header" id="{{ ride.id }}">
+                                        <h2 class="mb-1">
+                                            <button class="btn btn-lg btn-block" type="button" data-toggle="collapse" data-target="#collapse{{ ride.id }}"
+                                                aria-expanded="true" aria-controls="collapse{{ ride.id }}">
+                                                <div class="row">
+                                                    <div class="d-flex mt-1 mb-3 w-100 justify-content-between">
+                                                        <h3 class="mb-1">{{ ride.destination }}
+                                                            {% if ride.is_completed %}
+                                                            <span class="badge badge-secondary mx-3">Completed</span>
+                                                            {% endif %}
+                                                        </h3>
+                
+                                                        <h4 class="text-muted text-right">from {{ ride.start_location }}</h4>
+                                                    </div>
+                                                </div>
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    {% if ride == avail_rides|first %}
+                                    <div id="collapse{{ ride.id }}" class="collapse show" aria-labelledby="{{ ride.id }}" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <p class="h4 my-2 text-muted">Arrival Time</p>
+                                            <p class="h5 mt-1 mb-3">{{ ride.arrival_time }}</p>
+                                        
+                                            <p class="h4 mt-3 mb-2 text-muted">Capacity</p>
+                                            <p class="h5 mt-1 mb-3">Ride with {{ ride.passenger_count }} Passengers.</p>
+                                        
+                                            <p class="h4 mt-3 mb-2 text-muted">Vehicle Type</p>
+                                            <p class="h5 mt-1 mb-3">{{ ride.vehicle_type }}</p>
+                                        
+                                            <!--   Confirm button here       -->
+                                            <a class="btn btn-primary" href="{% url 'pool:confirm' ride.id %}" role="button">Confirm</a>
+                                        
+                                            {% if ride.is_completed %}
+                                            <a class="btn btn-secondary disabled" href="{% url 'pool:detail' ride.id %}" role="button">Detail</a>
+                                            {% else %}
+                                            <a class="btn btn-secondary" href="{% url 'pool:detail' ride.id %}" role="button">Detail</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                    <div id="collapse{{ ride.id }}" class="collapse" aria-labelledby="{{ ride.id }}" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <p class="h4 my-2 text-muted">Arrival Time</p>
+                                            <p class="h5 mt-1 mb-3">{{ ride.arrival_time }}</p>
+                                        
+                                            <p class="h4 mt-3 mb-2 text-muted">Capacity</p>
+                                            <p class="h5 mt-1 mb-3">Ride with {{ ride.passenger_count }} Passengers.</p>
+                                        
+                                            <p class="h4 mt-3 mb-2 text-muted">Vehicle Type</p>
+                                            <p class="h5 mt-1 mb-3">{{ ride.vehicle_type }}</p>
+                                        
+                                            <!--   Confirm button here       -->
+                                            <a class="btn btn-primary" href="{% url 'pool:confirm' ride.id %}" role="button">Confirm</a>
+                                        
+                                            {% if ride.is_completed %}
+                                            <a class="btn btn-secondary disabled" href="{% url 'pool:detail' ride.id %}" role="button">Detail</a>
+                                            {% else %}
+                                            <a class="btn btn-secondary" href="{% url 'pool:detail' ride.id %}" role="button">Detail</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                                <p class="h4 text-muted mx-5 my-5">No Carpool is available to claim.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <!--================================ Ride History ==========================================-->
+                <div class="row ml-5 mt-5">
+                    <p class="display-4 ml-3">Ride History</p>
+                </div>
+                <div class="row ml-5">
+                    <div class="col">
+                        <div class="card">
+                            {% if latest_question_list %}
+                            <div class="accordion" id="accordionExample">
+                                {% for ride in latest_question_list %}
+                                <div class="card">
+                                    <div class="card-header" id="{{ ride.id }}">
+                                        <h2 class="mb-1">
+                                            <button class="btn btn-lg btn-block" type="button" data-toggle="collapse"
+                                                data-target="#collapse{{ ride.id }}" aria-expanded="true" aria-controls="collapse{{ ride.id }}">
+                                                <div class="row">
+                                                    <div class="d-flex mt-1 mb-3 w-100 justify-content-between">
+                                                        <h3 class="mb-1">{{ ride.destination }}
+                                                            {% if ride.is_confirmed%}
+                                                            <span class="badge badge-success ml-3">Confirmed</span>
+                                                            {% endif %}
+                                                            {% if ride.is_completed %}
+                                                            <span class="badge badge-secondary ml-1">Completed</span>
+                                                            {% endif %}
+                                                        </h3>
+
+                                                        <h4 class="text-muted text-right">from {{ ride.start_location }}</h4>
+                                                    </div>
+                                                </div>
+                                            </button>
+                                        </h2>
+                                    </div>
+
+                                    {% if ride == latest_question_list|first %}
+                                    <div id="collapse{{ ride.id }}" class="collapse show" aria-labelledby="{{ ride.id }}" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <p class="h4 my-2 text-muted">Arrival Time</p>
+                                            <p class="h5 mt-1 mb-3">{{ ride.arrival_time }}</p>
+                                        
+                                            <p class="h4 mt-3 mb-2 text-muted">Capacity</p>
+                                            <p class="h5 mt-1 mb-3">Ride with {{ ride.passenger_count }} Passengers.</p>
+                                        
+                                            <p class="h4 mt-3 mb-2 text-muted">Vehicle Type</p>
+                                            <p class="h5 mt-1 mb-3">{{ ride.vehicle_type }}</p>
+                                        
+                                            {% if ride.is_completed %}
+                                            <a class="btn btn-secondary disabled" href="{% url 'pool:detail' ride.id %}" role="button">Detail</a>
+                                            {% else %}
+                                            <a class="btn btn-primary" href="{% url 'pool:complete' ride.id %}" role="button">Complete</a>
+                                            <a class="btn btn-secondary" href="{% url 'pool:detail' ride.id %}" role="button">Detail</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                    <div id="collapse{{ ride.id }}" class="collapse" aria-labelledby="{{ ride.id }}" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <p class="h4 my-2 text-muted">Arrival Time</p>
+                                            <p class="h5 mt-1 mb-3">{{ ride.arrival_time }}</p>
+
+                                            <p class="h4 mt-3 mb-2 text-muted">Capacity</p>
+                                            <p class="h5 mt-1 mb-3">Ride with {{ ride.passenger_count }} Passengers.</p>
+
+                                            <p class="h4 mt-3 mb-2 text-muted">Vehicle Type</p>
+                                            <p class="h5 mt-1 mb-3">{{ ride.vehicle_type }}</p>
+
+                                            {% if ride.is_completed %}
+                                            <a class="btn btn-secondary disabled" href="{% url 'pool:detail' ride.id %}"
+                                                role="button">Detail</a>
+                                            {% else %}
+                                            <a class="btn btn-primary" href="{% url 'pool:complete' ride.id %}" role="button">Complete</a>
+                                            <a class="btn btn-secondary" href="{% url 'pool:detail' ride.id %}" role="button">Detail</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                                <p class="h4 text-muted mx-5 my-5">No Carpool History is available.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            {% if latest_question_list %}
+            <div class="container">
+                <div class="row">
+                    <div class="card mr-5 my-3 text-white bg-info d-block">
+                        <div class="card-body mr-3 my-2">
+                            <h1 class="card-title display-4">Latest Order</h1>
+                            {% with current=latest_question_list|first %}
+                            <hr class="mt-3 mb-5 mr-5" style="border-color: #eee">
+                            <h5 class="card-subtitle lead">You are going to {{ current.destination }}.</h5>
+                            <p class="card-text my-3">From {{ current.departure}} | {{ current.vehicle_type }} |
+                                Arrived in {{ current.arrival_time }}</p>
+                             <!--     <a href="{% url 'pool:detail' current.id %}" class="btn mt-5 btn-outline-light">Go to Ride</a>  -->
+                            {% endwith %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

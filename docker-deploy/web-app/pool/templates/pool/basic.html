@@ -1,0 +1,174 @@
+{% load static %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" type="text/css" href="{% static 'pool/style.css' %}" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+
+
+
+
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">CarpoolShare</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    User
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/pool/driver/">Driver</a>
+                    <a class="dropdown-item" href="/pool/rider/">Rider</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
+                </div>
+            </li>
+        </ul>
+        <a class="btn btn btn-outline-light mx-2 my-2 my-sm-0" href="{% url 'profile' %}" role="button">Profile</a>
+        <a class="btn btn btn-outline-info mx-2 my-2 my-sm-0" href="{% url 'logout' %}" role="button">Logout</a>
+    </div>
+</nav>
+
+
+
+
+{% block content %}
+{% endblock %}
+
+
+<!-- FOOTER -->
+<div class="my-5" style="height: 100px;"></div>
+<footer class="mt-5">
+    <div class="container-fluid bg-dark text-white mt-5">
+        <div class="container">
+            <div class="row py-3">
+                <!-- footer column 1 start -->
+                <div class="col-md-4">
+                    <!-- row start -->
+                    <div class="row py-2">
+                        <div class="col-sm-3 hidden-md-down">
+                            <a class="bg-circle bg-info" href="https://twitter.com/ ">
+                                <i class="fa fa-2x fa-fw fa-bookmark-o" aria-hidden="true "></i>
+                            </a>
+                        </div>
+                        <div class="col-sm-9">
+                            <h4>CarpoolShare</h4>
+                            Search and Share Ride
+                        </div>
+                    </div>
+                    <!-- row end -->
+                </div>
+                <!-- footer column 1 end -->
+                <!-- footer column 2 start -->
+                <div class="col-md-4">
+                    <!-- row start -->
+                    <div class="row py-2">
+                        <div class="col-sm-3 hidden-md-down">
+                            <a class="bg-circle bg-info" href="#">
+                                <i class="fa fa-2x fa-fw fa-address-card" aria-hidden="true "></i>
+                            </a>
+                        </div>
+                        <div class="col-sm-9">
+                            <h4>YiHao Hu</h4>
+                            <p>ECE Master, Duke University</p>
+                        </div>
+                    </div>
+                    <!-- row end -->
+                    <!-- row start -->
+                    <div class="row py-2">
+                        <div class="col-sm-3 hidden-md-down">
+                            <a class="bg-circle bg-info" href="#">
+                                <i class="fa fa-2x fa-fw fa-linkedin" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                        <div class="col-sm-9">
+                            <h4>Linkedin</h4>
+                            <p class=" ">About me.</a></p>
+                        </div>
+                    </div>
+                    <!-- row end -->
+                </div>
+                <!-- footer column 2 end -->
+                <!-- footer column 3 start -->
+                <div class="col-md-4">
+                    <!-- row starting  -->
+                    <div class="row py-2">
+                        <div class="col-sm-3 hidden-md-down">
+                            <a class="bg-circle bg-success" href="# ">
+                                <i class="fa fa-2x fa-fw fa-address-card" aria-hidden="true "></i>
+                            </a>
+                        </div>
+                        <div class="col-sm-9">
+                            <h4>YiFan Xiao</h4>
+                            <p>ECE Master, Duke University</a></p>
+                        </div>
+                    </div>
+                    <!-- row ended -->
+                    <!-- row starting  -->
+                    <div class="row py-2">
+                        <div class="col-sm-3 hidden-md-down">
+                            <a class="bg-circle bg-success" href="https://twitter.com/ ">
+                                <i class="fa fa-2x fa-fw fa-linkedin" aria-hidden="true "></i>
+                            </a>
+                        </div>
+                        <div class="col-sm-9">
+                            <h4>Linkedin</h4>
+                            About me.
+                        </div>
+                    </div>
+                    <!-- row ended -->
+                </div>
+                <!-- footer column 3 end -->
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid bg-primary py-3">
+        <div class="container">
+            <div class="row py-3">
+                <div class="col-md-9">
+                    <h6 class="text-white">Carpool Share.</h6>
+                    <h6 class="text-white" style="opacity: 0.7;">Project for ECE 568 Robust Server Software Engineering.</h6>
+                </div>
+                <div class="col-md-3">
+                    <div class="d-inline-block">
+                        <div class="bg-circle-outline d-inline-block">
+                            <a href="https://www.facebook.com/" class="text-white">
+                                <i class="fa fa-2x fa-fw fa-facebook"></i>
+                            </a>
+                        </div>
+
+                        <div class="bg-circle-outline d-inline-block">
+                            <a href="https://twitter.com/" class="text-white">
+                                <i class="fa fa-2x fa-fw fa-twitter"></i>
+                            </a>
+                        </div>
+
+                        <div class="bg-circle-outline d-inline-block">
+                            <a href="https://www.linkedin.com/company/" class="text-white">
+                                <i class="fa fa-2x fa-fw fa-linkedin"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

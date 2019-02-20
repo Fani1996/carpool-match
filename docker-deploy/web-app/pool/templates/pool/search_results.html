@@ -1,0 +1,96 @@
+{% extends 'basic.html' %}
+{% block title %}Search Result{% endblock %}
+
+
+{% block content %}
+
+<div class="bg-info mt-5 text-white">
+    <div class="my-3 pt-5">
+        <div sytle="height:120px;"></div>
+        <div class="row mx-5 pt-5">
+            <h1 class="display-4">Search Result</h1>
+        </div>
+        <div style="height:120px;"></div>
+    </div>
+</div>
+
+<div class="row mx-5">
+    <div class="col-8">
+        <div class="card">
+            {% if results %}
+            <div class="accordion" id="accordionExample">
+                {% for ride in results %}
+                <div class="card">
+                    <div class="card-header" id="{{ ride.id }}">
+                        <h2 class="mb-1">
+                            <button class="btn btn-lg btn-block" type="button" data-toggle="collapse" data-target="#collapse{{ ride.id }}"
+                                aria-expanded="true" aria-controls="collapse{{ ride.id }}">
+                                <div class="row">
+                                    <div class="d-flex mt-1 mb-3 w-100 justify-content-between">
+                                        <h3 class="mb-1">{{ ride.destination }}
+                                            {% if ride.is_confirmed %}
+                                            <span class="badge badge-success ml-3">Confirmed</span>
+                                            {% endif %}
+                                        </h3>
+                                    </div>
+                                </div>
+                            </button>
+                        </h2>
+                    </div>
+
+                    {% if ride == results|first %}
+                    <div id="collapse{{ ride.id }}" class="collapse show" aria-labelledby="{{ ride.id }}" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <p class="h4 my-2 text-muted">Arrival Time</p>
+                            <p class="h5 mt-1 mb-3">{{ ride.arrival_time }}</p>
+                        
+                            <p class="h4 mt-3 mb-2 text-muted">Capacity</p>
+                            <p class="h5 mt-1 mb-3">Ride with {{ ride.passenger_count }} Passengers.</p>
+                        
+                            <p class="h4 mt-3 mb-2 text-muted">Vehicle Type</p>
+                            <p class="h5 mt-1 mb-3">{{ ride.vehicle_type }}</p>
+                        
+                            <a class="btn btn-primary" href="{% url 'pool:join' ride.id %}" role="button">Join</a>
+                        
+                            {% if ride.is_completed %}
+                            <a class="btn btn-secondary disabled" href="{% url 'pool:detail' ride.id %}" role="button">Detail</a>
+                            {% else %}
+                            <a class="btn btn-secondary" href="{% url 'pool:detail' ride.id %}" role="button">Detail</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% else %}
+                    <div id="collapse{{ ride.id }}" class="collapse" aria-labelledby="{{ ride.id }}" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <p class="h4 my-2 text-muted">Arrival Time</p>
+                            <p class="h5 mt-1 mb-3">{{ ride.arrival_time }}</p>
+
+                            <p class="h4 mt-3 mb-2 text-muted">Capacity</p>
+                            <p class="h5 mt-1 mb-3">Ride with {{ ride.passenger_count }} Passengers.</p>
+
+                            <p class="h4 mt-3 mb-2 text-muted">Vehicle Type</p>
+                            <p class="h5 mt-1 mb-3">{{ ride.vehicle_type }}</p>
+
+                            <a class="btn btn-primary" href="{% url 'pool:join' ride.id %}" role="button">Join</a>
+
+                            {% if ride.is_completed %}
+                            <a class="btn btn-secondary disabled" href="{% url 'pool:detail' ride.id %}" role="button">Detail</a>
+                            {% else %}
+                            <a class="btn btn-secondary" href="{% url 'pool:detail' ride.id %}" role="button">Detail</a>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                {% else %}
+                <p class="h4 text-muted mx-5 my-5">No Carpool is available.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

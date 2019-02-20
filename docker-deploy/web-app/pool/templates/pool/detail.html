@@ -1,0 +1,78 @@
+{% extends 'basic.html' %}
+{% block title %}Detail{% endblock %}
+
+
+{% block content %}
+
+<div class="bg-info mt-5 text-white">
+    <div class="my-3 pt-5">
+        <div sytle="height:120px;"></div>
+        <div class="row mx-5 pt-5 px-5">
+            <h1 class="display-4">Detail</h1>
+        </div>
+        <div style="height:80px;"></div>
+    </div>
+</div>
+
+<div class="container  mx-5 my-5 px-5">
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+
+<div class="row mr-2 mt-2">
+    <div class="col-sm-12">
+        <div class="alert alert-success alert-dismissible fade show px-4" role="alert">
+            <h4 class="alert-heading mt-3">Ride Detail</h4>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            <p class="mt-2">Hey There! Below is Your Ride Detail.</p>
+            <hr>
+            <p class="h4 my-2 text-muted">Driver Info</p>
+            {% if not ride.driver %}
+            <div class="alert alert-warning" role="alert">
+                No Driver Confirmed Your Ride Yet! Please Wait Patiently.
+            </div>
+            {% else %}
+            <ul class="list-inline">
+                <li class="list-inline-item mt-1 mr-2">| Name </li>
+                <li class="list-inline-item h5 mt-1 mb-3">{{ ride.driver_real_name }}</li>
+                <li class="list-inline-item mt-1 mr-2 ml-5">| Username </li>
+                <li class="list-inline-item h5 mt-1 mb-3">{{ ride.driver }}</li>
+                <li class="list-inline-item mt-1 mr-2 ml-5">| Vehicle Type</li>
+                <li class="list-inline-item h5 mt-1 mb-3">{{ ride.vehicle_type }}</li>
+                <li class="list-inline-item mt-1 mr-2 ml-5">| License Plate</li>
+                <li class="list-inline-item h5 mt-1 mb-3">{{ ride.license_plate_number }}</li>
+                <li class="list-inline-item mt-1 mr-2 ml-5">| Capacity</li>
+                <li class="list-inline-item h5 mt-1 mb-3">{{ ride.capacity }}</li>
+            </ul>
+            {% endif %}
+            <p class="h4 my-2 text-muted">Sharer Info</p>
+            <ul class="list-inline">
+                {% for share in ride.sharer.all %}
+                    <li class="list-inline-item mt-1 mr-2">| Name </li>
+                    <li class="list-inline-item h5 mt-1 mb-3 mr-5">{{ share.real_name }}</li>
+                {% endfor %}
+            </ul>
+            <p class="h4 my-2 text-muted">Owner Info</p>
+            <ul class="list-inline">
+                <li class="list-inline-item mt-1 mr-2">| Name </li>
+                <li class="list-inline-item h5 mt-1 mb-2 mr-5">{{ ride.owner.real_name }}</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row mr-2 mt-2">
+    <div class="col-sm-12">
+        <form method="post" class="post-form">
+            {% csrf_token %}
+            {% include 'form.html' with form=form %}
+            <a class="btn btn-primary my-5" href="{% url 'home' %}" role="button">Back</a>
+        </form>
+    </div>
+</div>
+
+
+</div>
+
+{% endblock %}

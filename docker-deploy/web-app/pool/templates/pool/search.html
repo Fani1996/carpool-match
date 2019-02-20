@@ -1,0 +1,35 @@
+{% extends 'basic.html' %}
+{% block title %}Carpool Share{% endblock %}
+
+
+{% block content %}
+<div class="bg-info mt-5 text-white">
+    <div class="my-3 pt-5">
+        <div sytle="height:120px;"></div>
+        <div class="row mx-5 pt-5">
+            <h1 class="display-4">Search Avaliable Rides.</h1>
+        </div>
+        <div style="height:80px;"></div>
+    </div>
+</div>
+
+<div class="bg-light mt-5">
+    <div class="row my-3 pt-3 pb-5 px-5">
+        <div class="col align-items-center">
+            <form method="post" class="mx-5">
+                {% csrf_token %}
+                {{ searchform.as_p }}
+                {% include 'form.html' with form=form %}
+                {% for field in searchform %}
+                <div class="form-group mx-2">
+                    {{field}}
+                </div>
+                {% endfor %}
+            
+                <button type="submit" name="search_button" class="btn btn-primary mx-2">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
